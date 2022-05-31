@@ -29,22 +29,40 @@ class HomeState extends State<Home> {
             future: list,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Container(
-                    child: ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(top: 16),
-                            width: double.infinity,
-                            child: Card(
-                              elevation: 5,
-                              child: Text(
-                                "nom : ${snapshot.data![index].nom} , prenom : ${snapshot.data![index].prenom} \nAge : ${snapshot.data![index].age}",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          );
-                        }));
+                return Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => About(),
+                            ))
+                      },
+                      child: Icon(Icons.add),
+                    ),
+                    Container(
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.only(top: 16),
+                                padding: const EdgeInsets.all(10),
+                                width: double.infinity,
+                                child: Card(
+                                  elevation: 5,
+                                  child: Text(
+                                    "nom : ${snapshot.data![index].nom} , prenom : ${snapshot.data![index].prenom} \nAge : ${snapshot.data![index].age}",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              );
+                            }))
+                  ],
+                );
               } else {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -53,3 +71,10 @@ class HomeState extends State<Home> {
             }),
       );
 }
+/*...
+  ListView(
+    // Says to the `ListView` that it must wrap its
+    // height (if it's vertical) and width (if it's horizontal).
+    shrinkWrap: true,
+  ),
+*/
